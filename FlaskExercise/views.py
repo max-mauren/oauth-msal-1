@@ -92,7 +92,7 @@ def _build_msal_app(cache=None, authority=None):
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Get the authorization request URL from a built msal app, and return it
     confidentialClientApplication = _build_msal_app(_load_cache(),authority)
-    authRequestUrl=confidentialClientApplication.get_authorization_request_url(scopes,login_hint=None,state=state,redirect_uri=Config.REDIRECT_PATH)
+    authRequestUrl=confidentialClientApplication.get_authorization_request_url(scopes=scopes,login_hint=None,state=state,redirect_uri=Config.REDIRECT_PATH)
     
     #return None
     return authRequestUrl
