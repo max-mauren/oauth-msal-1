@@ -55,7 +55,7 @@ def authorized():
         app = _build_msal_app(cache,Config.AUTHORITY)
         result = app.acquire_token_by_authorization_code(request.args.get('code'),
             scopes=Config.SCOPE,
-            redirect_uri=url_for('authorized', _external=True, _scheme='http'))
+            redirect_uri=url_for('authorized', _external=True, _scheme='https'))
         #  And replace the error dictionary
         #result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
         if 'error' in result:
@@ -94,7 +94,7 @@ def _build_msal_app(cache=None, authority=None):
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Get the authorization request URL from a built msal app, and return it
     confidentialClientApplication = _build_msal_app(_load_cache(),authority)
-    authRequestUrl=confidentialClientApplication.get_authorization_request_url(scopes=scopes,login_hint=None,state=state,redirect_uri=url_for('authorized', _external=True, _scheme='http'))
+    authRequestUrl=confidentialClientApplication.get_authorization_request_url(scopes=scopes,login_hint=None,state=state,redirect_uri=url_for('authorized', _external=True, _scheme='https'))
     
     #return None
     return authRequestUrl
