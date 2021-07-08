@@ -1,7 +1,7 @@
 class Config(object):
     # In a production app, store this instead in KeyVault or an environment variable
     # TODO: Enter your client secret from Azure AD below
-    CLIENT_SECRET = "eec88ed0-6b34-45be-b179-f428248a95a9" 
+    CLIENT_SECRET = "9vpbxkqrjnI2-m55onwl65Ww~SIlcQ_C_-" 
 
     AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app
     # AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
@@ -11,7 +11,8 @@ class Config(object):
 
     # TODO: Enter the redirect path you want to use for OAuth requests
     #   Note that this will be the end of the URI entered back in Azure AD
-    REDIRECT_PATH = "https://oauth-msal-udacity-1.azurewebsites.net/landing"  # Used to form an absolute URL, 
+    #REDIRECT_PATH = "https://oauth-msal-udacity-1.azurewebsites.net/landing"  # Used to form an absolute URL, 
+    REDIRECT_PATH = "/landing"  # Used to form an absolute URL, 
         # which must match your app's redirect_uri set in AAD
 
     # You can find the proper permission names from this document

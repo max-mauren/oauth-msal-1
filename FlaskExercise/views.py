@@ -53,9 +53,11 @@ def authorized():
         # TODO: Acquire a token by authorization code from an MSAL app
         
         app = _build_msal_app(cache,Config.AUTHORITY)
-        app.acquire_token_by_authorization_code(request.args.get('code'))
+        result = app.acquire_token_by_authorization_code(request.args.get('code'),
+            scopes=Config.SCOPE,
+            redirect_uri=url_for('authorized', _external=True, _scheme='http'))
         #  And replace the error dictionary
-        result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
+        #result = {'error': 'Not Implemented', 'error_description': 'Function not implemented.'}
         if 'error' in result:
             return render_template('auth_error.html', result=result)
         session['user'] = result.get('id_token_claims')
@@ -84,7 +86,7 @@ def _save_cache(cache):
 
 def _build_msal_app(cache=None, authority=None):
     # TODO: Create and return a Confidential Client Application from msal
-    confidentailClientApplication = msal.ConfidentialClientApplication(Config.CLIENT_ID, Config.CLIENT_SECRET, authority,token_cache=cache)
+    confidentailClientApplication = msal.ConfidentialClientApplication(client_id= Config.CLIENT_ID, client_credential= Config.CLIENT_SECRET,authority=authority,token_cache=cache)
     #return None
     return confidentailClientApplication
 
@@ -92,7 +94,7 @@ def _build_msal_app(cache=None, authority=None):
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Get the authorization request URL from a built msal app, and return it
     confidentialClientApplication = _build_msal_app(_load_cache(),authority)
-    authRequestUrl=confidentialClientApplication.get_authorization_request_url(scopes=scopes,login_hint=None,state=state,redirect_uri=Config.REDIRECT_PATH)
+    authRequestUrl=confidentialClientApplication.get_authorization_request_url(scopes=scopes,login_hint=None,state=state,redirect_uri=url_for('authorized', _external=True, _scheme='http'))
     
     #return None
     return authRequestUrl
